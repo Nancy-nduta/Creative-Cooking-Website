@@ -1,0 +1,343 @@
+<?php
+// Start the session to ensure access to $_SESSION variables
+session_start();
+
+// Check if the user is a recipe owner and get their username
+$logged_in_owner = isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'recipeowner' 
+                   ? htmlspecialchars($_SESSION['username']) 
+                   : 'Guest'; // Use 'Guest' as a fallback, though ideally, a redirect should prevent this.
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a New Recipe</title>
+
+    <!-- Google Fonts: Lora (Display) and Poppins (Body/Input) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. VARIABLES & GLOBAL STYLES (ADOPTING USER PAGE STYLING)
+           ========================================================================== */
+        :root {
+            --primary-color: #83a87d; /* Soft green */
+            --primary-color-dark: #6a8d65;
+            --secondary-color: #f2eee8; /* Creamy background */
+            --light-color: #ffffff;
+            --bg-color: var(--secondary-color);
+            --text-color: #4a4a4a;
+            --heading-color: #2d2d2d;
+            --label-color: var(--heading-color);
+            --border-color: #e0dcd5; /* Lighter, earthy border */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            
+            --font-body: 'Poppins', sans-serif;
+            --font-display: 'Lora', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 0; 
+            padding-bottom: 2rem;
+        }
+        
+        /* --- Top Bar for Back Button (New Style) --- */
+        .top-bar {
+            width: 100%;
+            background-color: var(--primary-color-dark);
+            padding: 0.5rem 1.5rem;
+        }
+        .top-bar-content { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0; 
+        }
+        .back-link {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: opacity 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        .back-link:hover { opacity: 0.8; }
+        .back-link .fa { margin-right: 0.5rem; }
+
+        /* ==========================================================================
+           2. HEADER & FORM CONTAINER
+           ========================================================================== */
+        .form-header {
+            text-align: center;
+            margin-top: 2rem; 
+            margin-bottom: 2rem;
+        }
+        
+        .form-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary-color-dark);
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        .form-header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-color-dark);
+            font-family: var(--font-display);
+        }
+        
+        .recipe-form-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--light-color);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ==========================================================================
+           3. FORM ELEMENTS STYLING
+           ========================================================================== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--label-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--secondary-color);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* Style for the automatically populated read-only field */
+        .form-input[readonly] {
+            background-color: #e0e0e0; 
+            color: #777;
+            cursor: not-allowed;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(131, 168, 125, 0.3);
+            background-color: var(--light-color);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        /* Custom File Input Styling */
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-button {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            background-color: var(--secondary-color);
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            color: var(--label-color);
+            transition: background-color 0.3s ease;
+        }
+        
+        .file-input-button:hover {
+            background-color: #e8e4dc;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-icon {
+            margin-right: 0.5rem;
+            color: var(--primary-color-dark);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light-color);
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            margin-top: 2rem;
+            border: 1px solid var(--primary-color);
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--primary-color-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* ==========================================================================
+           4. RESPONSIVE DESIGN
+           ========================================================================== */
+        @media (max-width: 768px) {
+            body {
+                padding: 0 0 1rem 0;
+            }
+            .recipe-form-container {
+                padding: 2rem;
+            }
+            .form-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- ======================= TOP BAR (BACK BUTTON) ======================= -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <a href="/recipeownerl" class="back-link">
+                <i class="fa fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+    <!-- ======================================================================= -->
+
+    <header class="form-header">
+        <img src="logo 1.jpeg" alt="Culinary Compass Logo">
+        <h1>Add a New Recipe</h1>
+    </header>
+
+    <div class="recipe-form-container">
+        <form action="/recipe" method="post" enctype="multipart/form-data">
+
+            <!-- Recipe Name -->
+            <div class="form-group">
+                <label for="recipename" class="form-label">Recipe Name</label>
+                <input type="text" required name="recipename" id="recipename" class="form-input" placeholder="e.g., Classic Spaghetti Carbonara">
+            </div>
+
+            <!-- Recipe Owner (FIXED: Auto-populated from session) -->
+            <div class="form-group">
+                <label for="recipeowner" class="form-label">Recipe Owner</label>
+                <input type="text" 
+                       required 
+                       name="recipeowner" 
+                       id="recipeowner" 
+                       class="form-input" 
+                       value="<?= $logged_in_owner ?>" 
+                       readonly> <!-- Ensure user cannot change this, linking recipe to session user -->
+            </div>
+            
+            <!-- Recipe Category -->
+            <div class="form-group">
+                <label for="recipecategory" class="form-label">Recipe Category</label>
+                <select name="recipecategory" id="recipecategory" class="form-select" required>
+                    <option value="" disabled selected>Select a category...</option>
+                    <option value="Appetizer">Appetizer</option>
+                    <option value="Main Course">Main Course</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Salad">Salad</option>
+                    <option value="Soup">Soup</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Beverage">Beverage</option>
+                </select>
+            </div>
+
+            <!-- Ingredients -->
+            <div class="form-group">
+                <label for="ingredients" class="form-label">Ingredients</label>
+                <textarea name="ingredients" required id="ingredients" class="form-textarea" placeholder="List each ingredient on a new line..."></textarea>
+            </div>
+            
+            <!-- Steps/Procedure -->
+            <div class="form-group">
+                <label for="steps" class="form-label">Procedure / Steps</label>
+                <textarea name="steps" required id="steps" class="form-textarea" placeholder="Describe the cooking steps in order..."></textarea>
+            </div>
+
+            <!-- Media Upload -->
+            <div class="form-group">
+                <label for="rmedia" class="form-label">Upload Images/Media</label>
+                <div class="file-input-wrapper">
+                    <div class="file-input-button">
+                        <i class="fa fa-upload file-input-icon"></i>
+                        <span>Choose files...</span>
+                    </div>
+                    <input type="file" multiple name="rmedia[]" id="rmedia"> 
+                </div>
+            </div>
+
+            <!-- Submission Button -->
+            <button type="submit" class="submit-btn">Add Recipe</button>
+            
+        </form>
+    </div>
+    <script>
+        // JavaScript to show the selected file name in the custom button
+        document.getElementById('rmedia').addEventListener('change', function() {
+            const fileNameSpan = this.closest('.file-input-wrapper').querySelector('span');
+            if (this.files.length > 0) {
+                fileNameSpan.textContent = this.files.length > 1 
+                    ? this.files.length + ' files selected' 
+                    : this.files[0].name;
+            } else {
+                fileNameSpan.textContent = 'Choose files...';
+            }
+        });
+    </script>
+</body>
+</html>

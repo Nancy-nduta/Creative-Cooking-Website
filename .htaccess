@@ -1,0 +1,38 @@
+# Set default files for directories (e.g., for when someone visits your main domain)
+# This will look for index.php first, then index.html
+DirectoryIndex  index.html
+
+# Enable the URL Rewriting Engine
+RewriteEngine On
+
+# ----------------------------------------------------------------------
+# Section 1: Force clean URLs in the browser (External Redirect)
+# If a user ever lands on "your-site.com/loginpage.html", this will
+# change the URL in their address bar to "your-site.com/loginpage".
+# ----------------------------------------------------------------------
+
+# For .php files
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# FOR .HTML FILES (This is the section you were missing)
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# ----------------------------------------------------------------------
+# Section 2: Make clean URLs work (Internal Rewrite)
+# This is the rule that fixes your 404 error.
+# ----------------------------------------------------------------------
+
+# First, make sure the request is not for a real, existing directory or file
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# RULE FOR .PHP FILES: If a .php file exists with that name, serve it.
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*?)/?$ $1.php [L]
+
+# RULE FOR .HTML FILES (This is the rule that fixes the 404)
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*?)/?$ $1.html [L]
+

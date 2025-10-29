@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Culinary Compass</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <!-- Embedded Stylesheet -->
+    <style>
+        :root {
+            --primary-color: #83a87d; /* Soft green */
+            --primary-color-dark: #6a8d65;
+            --secondary-color: #f2eee8; /* Creamy background */
+            --text-color: #4a4a4a;
+            --heading-color: #2d2d2d;
+            --border-color: #e0dcd5;
+            --light-color: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --font-body: 'Poppins', sans-serif;
+            --font-display: 'Lora', serif;
+            --border-radius: 8px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+        
+        /* --- Top Bar for Back Button --- */
+        .top-bar {
+            background-color: var(--primary-color-dark);
+            padding: 0.5rem 1.5rem;
+        }
+        .back-link {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: block;
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: opacity 0.3s ease;
+        }
+        .back-link:hover { opacity: 0.8; }
+        .back-link .fa { margin-right: 0.5rem; }
+
+        /* Main content area for centering the card */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            flex-grow: 1;
+        }
+
+        .registration-card {
+            background-color: var(--light-color);
+            width: 100%;
+            max-width: 480px;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            text-align: center;
+        }
+
+        .card-header { margin-bottom: 2rem; }
+
+        .logo {
+            display: block;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .card-header h1 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--heading-color);
+        }
+
+        .card-header p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-top: 0.5rem;
+        }
+
+        .registration-form .form-group { margin-bottom: 1.25rem; text-align: left; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--heading-color); }
+        .form-control {
+            width: 100%; height: 50px; padding: 0 1rem;
+            border: 1px solid var(--border-color); border-radius: var(--border-radius);
+            font-size: 1rem; font-family: var(--font-body);
+            background-color: var(--secondary-color);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control:focus {
+            outline: none; border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(131, 168, 125, 0.25);
+            background-color: var(--light-color);
+        }
+        
+        .radio-group { border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 1rem; margin-top: 0.5rem; }
+        .radio-group legend { font-weight: 500; color: var(--heading-color); padding: 0 0.5rem; margin-left: -0.5rem; font-size: 1rem; }
+        .radio-option { display: flex; align-items: center; margin-top: 0.75rem; }
+        .radio-option label { margin: 0 0 0 0.5rem; font-weight: 400; }
+        .radio-option input[type="radio"] { accent-color: var(--primary-color); }
+
+        .btn {
+            width: 100%; height: 50px; border: none; border-radius: var(--border-radius);
+            font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            font-family: var(--font-body); margin-top: 1rem;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow-color); }
+        .btn-primary { background-color: var(--primary-color); color: var(--light-color); }
+        .btn-primary:hover { background-color: var(--primary-color-dark); }
+        
+        .form-footer { margin-top: 2rem; font-size: 0.9rem; }
+        .form-footer a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+        .form-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 576px) {
+            .registration-card { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- ======================= TOP BAR (DYNAMIC BACK BUTTON) ======================= -->
+    <div class="top-bar">
+        <a href="/index" class="back-link">
+            <i class="fa fa-arrow-left"></i> Back to Homepage
+        </a>
+    </div>
+
+    <main class="main-content">
+        <div class="registration-card">
+            <header class="card-header">
+                <a href="<?= htmlspecialchars($home_page_url) ?>"><img src="logo 1.jpeg" alt="Culinary Compass Logo" class="logo"></a>
+                <h1>Create an Account</h1>
+                <p>Join our community of food lovers!</p>
+            </header>
+    
+            <form class="registration-form" action="/registration" method="POST" enctype="multipart/form-data">
+                
+                <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" class="form-control" placeholder="Enter First Name" name="fname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" class="form-control" placeholder="Enter Last Name" name="lname">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter Email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter Username" name="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter Password" name="password" required>
+                </div>
+                
+                <fieldset class="form-group radio-group">
+                    <legend>Choose your role</legend>
+                    <div class="radio-option">
+                        <input type="radio" name="usertype" value="1" id="user" required> 
+                        <label for="user">User</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="usertype" value="2" id="recipe_owner"> 
+                        <label for="recipe_owner">Recipe Owner</label>
+                    </div>
+                </fieldset>
+                
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="/login">Log In</a></p>
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>

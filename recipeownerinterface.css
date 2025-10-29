@@ -1,0 +1,43 @@
+*{
+
+    background-color:#ecdcdb;
+    text-align: center;
+    margin-top: 50px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+
+}
+nav img{
+    width: 100px;
+    margin-top:5px;
+    align-items: center;
+
+}
+.form{
+    border-style: solid;
+    border-color: black;
+    margin: 100px;
+    padding: 20px;
+    padding-top: 2px;
+    background-color: white;
+
+}
+
+.button1,.button2
+{
+    padding: 10px;
+    flex-basis: 31%;
+    background:#fff3f3;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    padding: 20px 12px;
+}
+.button2:hover{
+    box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    transform: 0.5s;
+}
+.button1:hover{
+    box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    transform: 0.5s;
+}

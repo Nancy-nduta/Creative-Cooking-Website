@@ -1,0 +1,67 @@
+body {
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)), url(bimage1.jpeg);
+    background-position: center;
+    background-size: cover;
+    animation: animate 16s ease-in-out infinite;
+}
+
+@keyframes animate{
+    0%,100%{
+        background-image: url(bimage1.jpeg);
+    }
+    25%{
+        background-image: url(bimage2.jpeg);
+    }
+    50%{
+        background-image: url(bimage3.jpeg);
+    }
+    75%{
+        background-image: url(bimage4.jpg);
+    }
+}
+
+.addcategoryform {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ecdcdb;
+}
+
+.addcategoryform input[type="text"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+.addcategoryform input[type="submit"] {
+    background-color:black;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.addcategoryform input[type="submit"]:hover {
+    background-color: #f44336;
+}
+
+.logo {
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-left: 400px;
+}

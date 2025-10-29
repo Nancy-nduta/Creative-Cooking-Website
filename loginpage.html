@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Culinary Compass</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <!-- Embedded Stylesheet -->
+    <style>
+        /* ==========================================================================
+           1. VARIABLES & GLOBAL STYLES (CONSISTENT THEME)
+           ========================================================================== */
+        :root {
+            --primary-color: #83a87d; /* Soft green */
+            --primary-color-dark: #6a8d65;
+            --secondary-color: #f2eee8; /* Creamy background */
+            --text-color: #4a4a4a;
+            --heading-color: #2d2d2d;
+            --border-color: #e0dcd5;
+            --light-color: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --font-body: 'Poppins', sans-serif;
+            --font-display: 'Lora', serif;
+            --border-radius: 8px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+ /* --- Top Bar for Back Button --- */
+        .top-bar {
+            background-color: var(--primary-color-dark);
+            padding: 0.5rem 1.5rem;
+        }
+        .back-link {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: block;
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: opacity 0.3s ease;
+        }
+        .back-link:hover { opacity: 0.8; }
+        .back-link .fa { margin-right: 0.5rem; }
+        /* ==========================================================================
+           2. LOGIN CARD & FORM LAYOUT
+           ========================================================================== */
+        .login-card {
+            background-color: var(--light-color);
+            width: 100%;
+            max-width: 420px;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            text-align: center;
+        }
+
+        .login-header {
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            display: block;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .login-header h1 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--heading-color);
+        }
+
+        .login-header p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-top: 0.5rem;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--heading-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            height: 50px;
+            padding: 0 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: var(--font-body);
+            background-color: var(--secondary-color);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(131, 168, 125, 0.25);
+            background-color: var(--light-color);
+        }
+        
+        /* ==========================================================================
+           3. BUTTONS & LINKS
+           ========================================================================== */
+        .btn {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-color-dark);
+        }
+
+        .btn-secondary {
+            background-color: #f1f1f1;
+            color: var(--heading-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e7e7e7;
+        }
+        
+        .form-footer {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .forgot-password {
+            display: block;
+            margin-bottom: 1.5rem;
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div class="top-bar">
+        <a href="/index" class="back-link">
+            <i class="fa fa-arrow-left"></i> Back to Homepage
+        </a>
+    </div>
+    <main>
+        
+        <div class="login-card">
+            <!-- Login Header with Logo and Title -->
+            <header class="login-header">
+                <a href="/index"><img src="logo 1.jpeg" alt="Culinary Compass Logo" class="logo"></a>
+                <h1>Welcome Back!</h1>
+                <p>Please enter your details to sign in.</p>
+            </header>
+
+            <!-- Login Form -->
+            <form class="login-form" action="/login" method="post">
+                <div class="form-group">
+                    <label for="uname">Username</label>
+                    <input type="text" id="uname" name="username" class="form-control" placeholder="Enter Username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="usertype">Login as:</label>
+                    <select id="usertype" name="usertype" class="form-control" required>
+                        <option value="" disabled selected>Select your role...</option>
+                        <option value="user">User</option>
+                        <option value="recipeowner">Recipe Owner</option>
+                        <option value="administrator">Administrator</option>
+                    </select>
+                </div>
+                
+                <a href="#" class="forgot-password">Forgot Password?</a>
+
+                <button type="submit" class="btn btn-primary" name="login">Login</button>
+                <!--<a href="/google-auth" class="btn btn-secondary" style="display:flex; align-items:center; gap:8px;">
+  <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google icon" width="18" height="18">
+  Sign in with Google
+</a>-->
+
+
+            <!-- Footer link to Registration Page -->
+            <div class="form-footer">
+                <p>Don't have an account? <a href="/signup">Sign up</a></p>
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>
