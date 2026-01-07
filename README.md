@@ -12,5 +12,4 @@ This project was built to practice full-stack development, focusing specifically
 2. Set up the required database and import the SQL file (if applicable).
 3. Update the database connection credentials in your `config.php` file.
 
-## Live Demo
-Check out the live version of the recipe website here: https://creativecooking.rf.gd/?i=1
+
